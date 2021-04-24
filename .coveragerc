@@ -1,0 +1,12 @@
+[run]
+source = needlimit/
+branch = True
+omit = 
+    */.tox/*
+    */manage.py
+    */migrations/*
+    */asgi.py
+    */wsgi.py
+
+[report]
+skip_covered = True
