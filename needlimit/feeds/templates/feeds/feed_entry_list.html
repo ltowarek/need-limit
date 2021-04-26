@@ -1,0 +1,18 @@
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Published</th>
+            <th>Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for feed_entry in object_list %}
+        <tr>
+            <td>{{ feed_entry.published }}</td>
+            <td><a href="{% url 'feeds:feed_entry_detail' feed_entry.feed.id feed_entry.id %}">{{ feed_entry.title }}</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
