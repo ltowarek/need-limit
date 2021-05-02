@@ -153,6 +153,7 @@ AUTH_USER_MODEL = "users.User"
 REDIS_URL = os.environ.get("REDIS_URL", "redis://")
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
+CELERY_BROKER_POOL_LIMIT = 20
 CELERY_BEAT_SCHEDULE = {
     "crawl_feeds": {
         "task": "feeds.tasks.crawl_feeds",
