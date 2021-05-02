@@ -19,4 +19,4 @@ USER app
 
 COPY ./docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["gunicorn needlimit.wsgi:application --bind 0.0.0.0:$PORT"]
+CMD ["sh", "-c", "gunicorn needlimit.wsgi:application --bind 0.0.0.0:$PORT"]
