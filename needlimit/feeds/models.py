@@ -1,13 +1,8 @@
-import datetime
-
 from django.db import models
 
 
 class Feed(models.Model):
-    crawling_interval = models.DurationField(default=datetime.timedelta(hours=1))
     html_link = models.URLField(max_length=200)
-    last_crawled = models.DateTimeField(null=True, blank=True)
-    last_updated = models.DateTimeField(null=True, blank=True)
     title = models.CharField(max_length=200)
     xml_link = models.URLField(max_length=200, unique=True)
 

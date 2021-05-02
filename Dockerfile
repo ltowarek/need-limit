@@ -16,4 +16,7 @@ WORKDIR /code/
 COPY --chown=app:app ./needlimit/ /code/
 RUN python manage.py collectstatic --noinput
 USER app
-CMD gunicorn needlimit.wsgi:application --bind 0.0.0.0:$PORT
+
+COPY ./docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["gunicorn needlimit.wsgi:application --bind 0.0.0.0:$PORT"]

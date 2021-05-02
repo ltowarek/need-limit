@@ -1,7 +1,13 @@
 import datetime
 
 import feedparser
+from django.utils.timezone import make_aware
 from feeds.models import Feed, FeedEntry
+
+
+def crawl_feed_by_id(feed_id: int) -> None:
+    feed = Feed.objects.get(id=feed_id)
+    crawl_feed(feed)
 
 
 def crawl_feed(feed: Feed) -> None:
@@ -16,8 +22,6 @@ def import_feed(parsed_feed: feedparser.FeedParserDict) -> Feed:
         defaults={
             "title": parsed_feed.feed.title,
             "html_link": parsed_feed.feed.link,
-            "last_updated": datetime.datetime(*parsed_feed.feed.updated_parsed[0:6]),
-            "last_crawled": datetime.datetime.now(),
         },
     )
     return feed
@@ -36,7 +40,9 @@ def import_feed_entry(feed: Feed, parsed_entry: feedparser.FeedParserDict) -> Fe
         link=parsed_entry.link,
         defaults={
             "title": parsed_entry.title,
-            "published": datetime.datetime(*parsed_entry.published_parsed[0:6]),
+            "published": make_aware(
+                datetime.datetime(*parsed_entry.published_parsed[0:6])
+            ),
             "summary": parsed_entry.summary,
         },
     )

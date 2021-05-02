@@ -1,5 +1,9 @@
 FROM python:3.9
 
+RUN apt update && apt-get install -y \
+    redis-server \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN pip install --upgrade pip
 
 RUN groupadd -g 1000 app

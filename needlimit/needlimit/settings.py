@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 import dj_database_url
@@ -36,6 +37,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1").sp
 INSTALLED_APPS = [
     "feeds.apps.FeedsConfig",
     "users.apps.UsersConfig",
+    "django_celery_beat",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -146,3 +148,14 @@ LOGIN_URL = "/users/login/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/users/login/"
 AUTH_USER_MODEL = "users.User"
+
+
+REDIS_URL = os.environ.get("REDIS_URL", "redis://")
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
+CELERY_BEAT_SCHEDULE = {
+    "crawl_feeds": {
+        "task": "feeds.tasks.crawl_feeds",
+        "schedule": timedelta(hours=1),
+    },
+}
