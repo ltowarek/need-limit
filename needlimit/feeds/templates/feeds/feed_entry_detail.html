@@ -1,6 +1,6 @@
 {% block content %}
 <p>{{ object.feed }}</p>
-<p>{{ object.link }}</p>
+<a href="{{ object.link }}">{{ object.link }}</a>
 <p>{{ object.published }}</p>
 <p>{{ object.title }}</p>
 {{ object.summary | safe }}
