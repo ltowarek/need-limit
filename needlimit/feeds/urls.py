@@ -6,6 +6,7 @@ feed_entry_patterns = [
     path("<int:pk>", views.FeedEntryDetailView.as_view(), name="feed_entry_detail"),
 ]
 
+
 feed_patterns = (
     [
         path("", views.FeedListView.as_view(), name="feed_list"),
@@ -14,7 +15,7 @@ feed_patterns = (
         path("<int:pk>/update", views.FeedUpdateView.as_view(), name="feed_update"),
         path("<int:pk>/delete", views.FeedDeleteView.as_view(), name="feed_delete"),
         path("<int:pk>/refresh", views.FeedRefreshView.as_view(), name="feed_refresh"),
-        path("<int:feed_id>/entries/", include(feed_entry_patterns)),
+        path("<int:feed_pk>/entries/", include(feed_entry_patterns)),
     ],
     "feeds",
 )

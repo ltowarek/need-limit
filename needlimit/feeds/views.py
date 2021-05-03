@@ -14,7 +14,7 @@ from feeds.services import crawl_feed
 
 class FeedListView(ListView):
     def get_queryset(self) -> QuerySet:
-        return Feed.objects.order_by("title", "pk")
+        return Feed.objects.all().order_by("title", "pk")
 
 
 class FeedDetailView(DetailView):
@@ -71,7 +71,9 @@ class FeedEntryListView(ListView):
     template_name = "feeds/feed_entry_list.html"
 
     def get_queryset(self) -> QuerySet:
-        return FeedEntry.objects.all().order_by("published", "pk")
+        return FeedEntry.objects.filter(feed=self.kwargs["feed_pk"]).order_by(
+            "published", "pk"
+        )
 
 
 class FeedEntryDetailView(DetailView):
